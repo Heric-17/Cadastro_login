@@ -1,0 +1,26 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Autenticacao</display-name>
+
+	<!-- <servlet> <servlet-name>Arquivos</servlet-name> <display-name>Arquivos</display-name> 
+		<description></description> <servlet-class>controlers.Arquivos</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>Arquivos</servlet-name> <url-pattern>/download</url-pattern> 
+		</servlet-mapping> -->
+
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+
+	<!-- MAPEAMENTO DE UM SERVLET VIA WEB .XML <servlet> <servlet-name>PrimeiroServ</servlet-name> 
+		<display-name>PrimeiroServ</display-name> <servlet-class>controlers.PrimeiroServ</servlet-class> 
+		<init-param> <param-name>nome</param-name> <param-value>Héric</param-value> 
+		</init-param> </servlet> <servlet-mapping> <servlet-name>PrimeiroServ</servlet-name> 
+		<url-pattern>/PrimeiroServ</url-pattern> </servlet-mapping> -->
+
+</web-app>
