@@ -17,9 +17,7 @@ public class Desloagar extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession sessao = req.getSession();
 		
-		sessao.removeAttribute("usuario");
-		sessao.removeAttribute("endereco");
-		
+		sessao.invalidate();
 		resp.sendRedirect("login.jsp");
 	}
 }

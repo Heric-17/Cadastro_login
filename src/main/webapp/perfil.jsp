@@ -31,9 +31,6 @@
 		<li><%=endereco.getRua()%></li>
 	</ul>
 	<a href="editarEndereco">Editar endereço</a>
-	<br>
-	<a href="deslogar">Deslogar do sistema</a>
-	<br>
 	
 	
 	<%
@@ -45,6 +42,7 @@
 	<%
 	}
 	%>
+	<a href="deslogar">Deslogar do sistema</a> <br>
 	<a href="excluirUsuario">Excluir perfil</a>
 
 </body>
