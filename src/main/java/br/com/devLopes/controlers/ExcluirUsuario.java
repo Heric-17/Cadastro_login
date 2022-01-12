@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ExcluirUsuario", urlPatterns = "/excluirUsuario")
+@WebServlet(name = "ExcluirUsuario", urlPatterns = "/in/excluirUsuario")
 public class ExcluirUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -23,9 +23,9 @@ public class ExcluirUsuario extends HttpServlet {
 
 		if (usuario != null) {
 			daoUsuario.excluirUsuario(usuario);
-			resp.sendRedirect("deslogar");
+			resp.sendRedirect(req.getContextPath()+"/in/deslogar");
 		} else {
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect(req.getContextPath()+"/publico/login.jsp");
 			return;
 		}
 	}

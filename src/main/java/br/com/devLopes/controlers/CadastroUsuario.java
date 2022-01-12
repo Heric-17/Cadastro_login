@@ -23,26 +23,26 @@ public class CadastroUsuario extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Usuario user = new Usuario();
 
-		if (Validacoes.CampoVazio(req, resp, "cadastro.jsp")) {
+		if (Validacoes.CampoVazio(req, resp, "publico/cadastro.jsp")) {
 			return;
 		}
 
-		if (Validacoes.tamanhoParam(req, resp, "nome", "cadastro.jsp", 3, 80)) {
+		if (Validacoes.tamanhoParam(req, resp, "nome", "publico/cadastro.jsp", 3, 80)) {
 			return;
 		}
 
 		if (DAOUser.consultarPorEmail(req.getParameter("email")) != null) {
-			Validacoes.validacaoGeral(req, resp, "Email já existente", "cadastro.jsp");
+			Validacoes.validacaoGeral(req, resp, "Email já existente", "publico/cadastro.jsp");
 			return;
 		} else if (!req.getParameter("email").contains("@")) {
-			Validacoes.validacaoGeral(req, resp, "Email deve conter '@'", "cadastro.jsp");
+			Validacoes.validacaoGeral(req, resp, "Email deve conter '@'", "publico/cadastro.jsp");
 			return;
-		} else if (Validacoes.tamanhoParam(req, resp, "email", "cadastro.jsp", 10, 100)) {
+		} else if (Validacoes.tamanhoParam(req, resp, "email", "publico/cadastro.jsp", 10, 100)) {
 			return;
 		}
 		String password = req.getParameter("senha");
 
-		if (Validacoes.tamanhoParam(req, resp, "senha","cadastro.jsp", 6, 255)) {
+		if (Validacoes.tamanhoParam(req, resp, "senha","publico/cadastro.jsp", 6, 255)) {
 			return;
 		}
 		try {
@@ -51,7 +51,6 @@ public class CadastroUsuario extends HttpServlet {
 			user.setSenha(cripto);
 
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
-			System.out.println(e1.getMessage());
 			e1.printStackTrace();
 		}
 
@@ -60,7 +59,7 @@ public class CadastroUsuario extends HttpServlet {
 
 		DAOUser.cadastrarUsuario(user);
 
-		resp.sendRedirect("login.jsp");
+		resp.sendRedirect(req.getContextPath()+"/publico/login.jsp");
 	}
 
 }

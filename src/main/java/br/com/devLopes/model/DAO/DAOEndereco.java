@@ -11,7 +11,9 @@ import br.com.devLopes.model.entidades.Usuario;
 
 public class DAOEndereco {
 
-	Connection conexao;
+	DAOUsuario DAOUser;
+	
+	private Connection conexao;
 
 	private Connection getConexao() {
 		try {
@@ -21,13 +23,13 @@ public class DAOEndereco {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conexao = Conexao.gerarConexao();
+		conexao = Conexao.getConexao().gerarConexao();
 		return conexao;
 	}
 
 	public boolean addEndereco(Usuario usuario, Endereco endereco) {
 
-		Connection conexao = getConexao();
+		conexao = getConexao();
 
 		String rua = endereco.getRua();
 		String cidade = endereco.getCidade();
@@ -57,8 +59,8 @@ public class DAOEndereco {
 
 	public Endereco getEnderecoPorEmail(String emailUser) {
 
-		Connection conexao = getConexao();
-		DAOUsuario DAOUser = new DAOUsuario();
+		DAOUser = new DAOUsuario();
+		conexao = getConexao();
 
 		Usuario user = DAOUser.consultarPorEmail(emailUser);
 		if (user == null) {
@@ -78,7 +80,7 @@ public class DAOEndereco {
 			if (resultado.next()) {
 				Endereco endereco = new Endereco();
 
-				endereco.setId_usuario(resultado.getInt("usuario_id"));
+				endereco.setUsuario_id(resultado.getInt("usuario_id"));
 				endereco.setCidade(resultado.getString("cidade"));
 				endereco.setRua(resultado.getString("estado"));
 				endereco.setEstado(resultado.getString("rua"));
@@ -99,15 +101,16 @@ public class DAOEndereco {
 		return null;
 	}
 
-	public boolean alterarEndereco(Endereco endereco) {
-		Connection conexao = getConexao();
+	public Endereco alterarEndereco(Endereco endereco, String email) {
+		conexao = getConexao();
 
 		String rua = endereco.getRua();
 		String cidade = endereco.getCidade();
 		String estado = endereco.getEstado();
-		int usuario_id = endereco.getId_usuario();
-
-		try {
+		int usuario_id = endereco.getUsuario_id();
+		
+//		System.out.println(usuario_id);
+		try { 
 			String sql = "UPDATE endereco SET rua = ?, cidade = ?, estado = ? WHERE usuario_id = ?";
 			PreparedStatement stm = conexao.prepareStatement(sql);
 
@@ -118,20 +121,20 @@ public class DAOEndereco {
 
 			stm.execute();
 
-			return true;
+			return getEnderecoPorEmail(email);
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 
-		return false;
+		return null; 
 	}
 
 	public void excluirEndereco(Usuario usuario) {
+		conexao = getConexao();
+		
 		try {
 			int id = usuario.getId();
-			Connection conexao = Conexao.gerarConexao();
 			String sql = "DELETE FROM endereco WHERE usuario_id = ?";
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			stm.setInt(1, id);

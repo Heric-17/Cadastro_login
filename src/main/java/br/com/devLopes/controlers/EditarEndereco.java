@@ -12,32 +12,26 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EditarEndereco", urlPatterns = "/editarEndereco")
+@WebServlet(name = "EditarEndereco", urlPatterns = "/in/editarEndereco")
 public class EditarEndereco extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// Instanciando novo Objeto de Acesso aos Dados (Data Access Object)
 	DAOEndereco daoEnde = new DAOEndereco();
 
-	// Configruando uma requisição GET para setar o endereço na sessão que deve ser
-	// editado no post
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// Conferindo se há um usuario logado pegando o atributo da session "usuario"
 		Usuario usuario = Validacoes.isLogado(req);
 		Endereco endereco = (Endereco) req.getSession().getAttribute("endereco");
 
-		// Se o atributo for null o cliente não pode fazer essa requisição e é enviado
-		// para fazer login
 		if (usuario == null) {
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect(req.getContextPath() + "/publico/login.jsp");
 			return;
-		} else if(endereco == null) {			
-			resp.sendRedirect("cadastroEndereco.jsp");
+		} else if (endereco == null) {
+			resp.sendRedirect(req.getContextPath() + "/in/cadastroEndereco.jsp");
 			return;
 		} else {
-			resp.sendRedirect("editarEndereco.jsp");
+			resp.sendRedirect(req.getContextPath() + "/in/editarEndereco.jsp");
 			return;
 		}
 	}
@@ -45,41 +39,43 @@ public class EditarEndereco extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// Conferindo se há um usuario logado pegando o atributo da session "usuario"
 		Usuario usuario = Validacoes.isLogado(req);
 
-		// Se o atributo for null o cliente não pode fazer essa requisição e é enviado
-		// para fazer login
+		Endereco endereco = (Endereco) req.getSession().getAttribute("endereco");
+
 		if (usuario == null) {
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect(req.getContextPath() + "/publico/login.jsp");
 			return;
+		} else if (endereco == null) {
+			resp.sendRedirect(req.getContextPath() + "/in/cadastroEndereco.jsp");
 		} else {
 			String rua = req.getParameter("rua");
 			String cidade = req.getParameter("cidade");
 			String estado = req.getParameter("estado");
-			
-			// Setando os novos valores no banco de dados;
-			Endereco endereco = daoEnde.getEnderecoPorEmail(usuario.getEmail());
 
-			if (Validacoes.CampoVazio(req, resp, "editarEndereco.jsp")) {
+			if (Validacoes.CampoVazio(req, resp, "in/editarEndereco.jsp")) {
 				return;
 			}
-			if (Validacoes.tamanhoParam(req, resp, "cidade", "editarEndereco.jsp", 3, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "cidade", "in/editarEndereco.jsp", 3, 80)) {
 				return;
 			}
-			if (Validacoes.tamanhoParam(req, resp, "rua", "editarEndereco.jsp", 5, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "rua", "in/editarEndereco.jsp", 5, 80)) {
 				return;
 			}
-			if (Validacoes.tamanhoParam(req, resp, "estado", "editarEndereco.jsp", 5, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "estado", "in/editarEndereco.jsp", 5, 80)) {
 				return;
 			}
 
+			endereco.setUsuario_id(usuario.getId());
 			endereco.setCidade(cidade);
 			endereco.setEstado(estado);
 			endereco.setRua(rua);
 
-			daoEnde.alterarEndereco(endereco);
-			resp.sendRedirect("perfil.jsp");
+			daoEnde.alterarEndereco(endereco, usuario.getEmail());
+			Endereco enderecoAtt = daoEnde.getEnderecoPorEmail(usuario.getEmail());
+
+			req.getSession().setAttribute("endereco", enderecoAtt);
+			resp.sendRedirect(req.getContextPath() + "/in/perfil.jsp");
 		}
 	}
 }

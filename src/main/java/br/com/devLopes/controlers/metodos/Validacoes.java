@@ -14,15 +14,9 @@ public class Validacoes {
 	static public void validacaoGeral(HttpServletRequest req, HttpServletResponse res, String mensagemErro,
 			String direcionamento) throws ServletException, IOException {
 
-		if (mensagemErro == null) {
-			mensagemErro = "Erro econtrado";
-		}
-		if (direcionamento == null) {
-			direcionamento = "login.jsp";
-		}
-
 		req.setAttribute("mensagemErro", mensagemErro);
-		req.getRequestDispatcher(direcionamento).forward(req, res);
+		req.getRequestDispatcher("/"+direcionamento).forward(req, res);
+//		res.sendRedirect(req.getContextPath()+"/"+direcionamento);
 	}
 
 	static public Usuario isLogado(HttpServletRequest req) {

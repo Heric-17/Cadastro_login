@@ -24,6 +24,7 @@ public class LoginUsuario extends HttpServlet {
 	DAOUsuario daoUser = new DAOUsuario();
 	DAOEndereco daoEnde = new DAOEndereco();
 
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Usuario user = daoUser.consultarPorEmail(req.getParameter("email"));
@@ -40,16 +41,17 @@ public class LoginUsuario extends HttpServlet {
 					if (endereco != null) {
 						session.setAttribute("endereco", endereco);
 					}
-					res.sendRedirect("perfil.jsp");
+					res.sendRedirect(req.getContextPath() + "/in/perfil.jsp");
+					return;
 				} else {
-					Validacoes.validacaoGeral(req, res, "Email ou senha incorreto", "/login.jsp");
+					Validacoes.validacaoGeral(req, res, "Email ou senha incorreto", "publico/login.jsp");
 				}
 			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
 		} else {
-			Validacoes.validacaoGeral(req, res, "Email ou senha incorreto", "/login.jsp");
+			Validacoes.validacaoGeral(req, res, "Email ou senha incorreto", "publico/login.jsp");
 		}
 	}
 }

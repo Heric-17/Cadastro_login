@@ -10,11 +10,20 @@
 		</servlet> <servlet-mapping> <servlet-name>Arquivos</servlet-name> <url-pattern>/download</url-pattern> 
 		</servlet-mapping> -->
 
-	
+
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>publico/index.jsp</welcome-file>
 	</welcome-file-list>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/Erro404.jsp</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/Erro.jsp</location>
+	</error-page>
 
 
 	<!-- MAPEAMENTO DE UM SERVLET VIA WEB .XML <servlet> <servlet-name>PrimeiroServ</servlet-name> 

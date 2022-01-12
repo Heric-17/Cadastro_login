@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ExcluirEndereco", urlPatterns = "/excluirEndereco")
+@WebServlet(name = "ExcluirEndereco", urlPatterns = "/in/excluirEndereco")
 public class ExcluirEndereco extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,10 +24,10 @@ public class ExcluirEndereco extends HttpServlet {
 		if(usuario != null) {
 			daoEndereco.excluirEndereco(usuario);
 			req.getSession().removeAttribute("endereco");
-			resp.sendRedirect("perfil.jsp");
+			resp.sendRedirect(req.getContextPath()+"/in/perfil.jsp");
 			return;
 		} else {
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect(req.getContextPath()+"/publico/login.jsp");
 			return;
 		}
 	}

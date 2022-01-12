@@ -44,12 +44,12 @@ public class Endereco {
 		this.estado = estado;
 	}
 
-	public int getId_usuario() {
+	public int getUsuario_id() {
 		return usuario_id;
 	}
 
-	public void setId_usuario(int id_usuario) {
-		this.usuario_id = id_usuario;
+	public void setUsuario_id(int usuario_id) {
+		this.usuario_id = usuario_id;
 	}
 
 }

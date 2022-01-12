@@ -7,8 +7,10 @@ br\com\devLopes\model\entidades\Usuario.class
 br\com\devLopes\model\entidades\Endereco.class
 br\com\devLopes\controlers\CadastroUsuario.class
 br\com\devLopes\model\DAO\DAOEndereco.class
+br\com\devLopes\controlers\filters\Logado.class
 br\com\devLopes\controlers\ExcluirUsuario.class
 br\com\devLopes\model\DAO\DAOUsuario.class
 br\com\devLopes\controlers\EditarEndereco.class
 br\com\devLopes\controlers\CadastroEndereco.class
+br\com\devLopes\controlers\filters\Autenticado.class
 br\com\devLopes\controlers\metodos\Criptografia.class

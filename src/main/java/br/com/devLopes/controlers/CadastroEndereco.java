@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "CadastroUsuario", urlPatterns = "/endereco")
+@WebServlet(name = "CadastroUsuario", urlPatterns = "/in/newEndereco")
 public class CadastroEndereco extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,17 +28,17 @@ public class CadastroEndereco extends HttpServlet {
 
 		if (usuario != null) {
 			
-			if (Validacoes.CampoVazio(req, resp, "cadastroEndereco.jsp")) {
+			if (Validacoes.CampoVazio(req, resp, "in/cadastroEndereco.jsp")) {
 				return;
 			}
 
-			if (Validacoes.tamanhoParam(req, resp, "cidade", "cadastroEndereco.jsp", 3, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "cidade", "in/cadastroEndereco.jsp", 3, 80)) {
 				return;
 			}
-			if (Validacoes.tamanhoParam(req, resp, "rua", "cadastroEndereco.jsp", 5, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "rua", "in/cadastroEndereco.jsp", 5, 80)) {
 				return;
 			}
-			if (Validacoes.tamanhoParam(req, resp, "estado", "cadastroEndreco.jsp", 5, 80)) {
+			if (Validacoes.tamanhoParam(req, resp, "estado", "in/cadastroEndreco.jsp", 5, 80)) {
 				return;
 			}
 
@@ -52,9 +52,9 @@ public class CadastroEndereco extends HttpServlet {
 
 			DAOendereco.addEndereco(usuario, endereco);
 			req.getSession().setAttribute("endereco", endereco);
-			resp.sendRedirect("perfil.jsp");
+			resp.sendRedirect(req.getContextPath()+"/in/perfil.jsp");
 		} else {
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect(req.getContextPath()+"/publico/login.jsp");
 		}
 	}
 }

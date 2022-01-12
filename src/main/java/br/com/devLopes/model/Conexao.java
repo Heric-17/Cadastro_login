@@ -9,7 +9,22 @@ import java.util.Properties;
 
 public class Conexao {
 
-	public static Connection gerarConexao() {
+	private static Conexao instancia;
+
+	private Conexao() {
+
+	}
+
+	public static Conexao getConexao() {
+		if (instancia == null) {
+			instancia = new Conexao();
+			return instancia;
+		} else {
+			return instancia;
+		}
+	}
+
+	public Connection gerarConexao() {
 		try {
 			Conexao getProps = new Conexao();
 
@@ -19,7 +34,6 @@ public class Conexao {
 			String user = properties.getProperty("banco.usuario");
 			String senha = properties.getProperty("banco.senha");
 
-//			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conexao = DriverManager.getConnection(url, user, senha);
 			return conexao;
 		} catch (SQLException | IOException e) {

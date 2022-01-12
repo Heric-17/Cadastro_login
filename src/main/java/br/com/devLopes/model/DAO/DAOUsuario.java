@@ -9,7 +9,8 @@ import br.com.devLopes.model.Conexao;
 import br.com.devLopes.model.entidades.Usuario;
 
 public class DAOUsuario {
-	DAOEndereco endereco = new DAOEndereco();
+
+	DAOEndereco daoEndereco;
 
 	private Connection conexao;
 
@@ -21,13 +22,13 @@ public class DAOUsuario {
 		} catch (SQLException e) {
 
 		}
-		conexao = Conexao.gerarConexao();
+		conexao = Conexao.getConexao().gerarConexao();
 		return conexao;
 	}
 
 	public void cadastrarUsuario(Usuario user) {
 
-		Connection conexao = getConexao();
+		conexao = getConexao();
 
 		String nome = user.getNome();
 		String email = user.getEmail();
@@ -52,7 +53,7 @@ public class DAOUsuario {
 	}
 
 	public Usuario consultarPorEmail(String email) {
-		Connection conexao = getConexao();
+		conexao = getConexao();
 		String sql = "SELECT * FROM usuario WHERE email = ?";
 		try {
 
@@ -89,13 +90,13 @@ public class DAOUsuario {
 	}
 
 	public void excluirUsuario(Usuario user) {
+		conexao = getConexao();
+		daoEndereco = new DAOEndereco();
 		try {
 			int id = user.getId();
 
-			Connection conexao = Conexao.gerarConexao();
-			endereco.excluirEndereco(user);
+			daoEndereco.excluirEndereco(user);
 
-			
 			String sql = "DELETE FROM usuario WHERE id = ?";
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			stm.setInt(1, id);
